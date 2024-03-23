@@ -11,6 +11,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Common;
 using System.Net.Http;
 using System.Text;
+using Azure.Data.Tables;
+using Microsoft.Azure.Cosmos;
 
 namespace Company.Function
 {
@@ -19,8 +21,8 @@ namespace Company.Function
         [FunctionName("GetResumeCounter")]
         public static HttpResponseMessage Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            [CosmosDB(databaseName:"DBName", collectionName: "Counter", ConnectionStringSetting = "AzureResumeConnectionString", Id = "1", PartitionKey = "1")] Counter counter,
-            [CosmosDB(databaseName:"DBName", collectionName: "Counter", ConnectionStringSetting = "AzureResumeConnectionString", Id = "1", PartitionKey = "1")] out Counter UpdatedCounter,
+            [CosmosDB(databaseName:"defaultdb01", containerName: "Counter", Connection = "DBConnectionString", Id = "1", PartitionKey = "1")] Counter counter,
+            [CosmosDB(databaseName:"defaultdb01", containerName: "Counter", Connection = "DBConnectionString", Id = "1", PartitionKey = "1")] out Counter UpdatedCounter,
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
